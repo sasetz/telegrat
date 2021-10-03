@@ -18,7 +18,7 @@ def start():
     if webhook_info_req.status_code == 200:
         print("[INFO] Webhook check succeeded:")
         print(webhook_info_req.json())
-        if not webhook_info_req.json()["url"]:
+        if not webhook_info_req.json()["result"]["url"]:
             print("[INFO] Creating webhook")
             set_webhook()
     else:
