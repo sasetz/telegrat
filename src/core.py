@@ -30,3 +30,6 @@ def set_webhook():
     setup_request = rq.post(api_url.format(method="setWebhook"), json={"url": setup.base_url + setup.webhook_path})
     if setup_request.status_code == 200:
         print("[INFO] Webhook setup completed!")
+    else:
+        print("[ERROR] Webhook setup failed!")
+        print(setup_request)
