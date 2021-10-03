@@ -14,6 +14,7 @@ def updates():
 
 def start():
     webhook_info_req = rq.get(api_url.format(method="getWebhookInfo"))
+    print("[INFO] Starting")
     if webhook_info_req.status_code == 200:
         print("[INFO] Webhook check succeeded:")
         print(webhook_info_req.json())
