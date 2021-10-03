@@ -2,7 +2,7 @@ import setup
 from bottle import post, HTTPResponse, request
 import requests as rq
 
-api_url = "https://api.telegram.org/" + setup.token + "/{method}"
+api_url = "https://api.telegram.org/bot" + setup.token + "/{method}"
 
 
 @post('/{}'.format(setup.webhook_path))

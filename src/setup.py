@@ -1,3 +1,3 @@
-token = "1215124595:AAHFjiPRfId_sWWG7YRh1tuzA24rhe9h1IE"
+token = "1215124595:AAGKsnKlVy5os6D0JrMuPIJnCocua_mmhno"
 base_url = "https://telegrat.herokuapp.com/"
 webhook_path = token
