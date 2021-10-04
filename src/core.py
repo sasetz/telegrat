@@ -1,32 +1,7 @@
 import config
-from bottle import post, HTTPResponse, request
 import requests as rq
 
 api_url = "https://api.telegram.org/bot" + config.token + "/{method}"
-
-
-def make_poller():
-    poller_registry = []
-
-    def pollers(func):
-        poller_registry.append(func)
-        return func
-
-    pollers.all = poller_registry
-    return pollers
-
-
-poll = make_poller()
-
-
-@post('/{}'.format(config.webhook_path))
-def updates():
-    if config.debug:
-        print("[INFO] Received an update:")
-        print(request.json)
-    for func in poll.all:
-        func(request.json)
-    return HTTPResponse(status=200)
 
 
 def start():
@@ -82,10 +57,3 @@ def do(method, payload=None):
         print("[WARNING] Request failed")
         print("[WARNING] Status code: {}".format(request_.status_code))
     return request_.json() if request_ else False
-
-
-@poll
-def greeting(message):
-    do("sendMessage",
-       {"chat_id": message['message']['chat']['id'], "text": "Вы сказали: " + message['message']['text']})
-    print("[INFO] Polling system works fine")
