@@ -22,7 +22,7 @@ poll = make_poller()
 @post('/{}'.format(setup.webhook_path))
 def updates():
     for func in poll.all:
-        func(request.json())
+        func(request.json)
     return HTTPResponse(status=200)
 
 
