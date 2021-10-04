@@ -1,8 +1,8 @@
-import setup
+import config
 from bottle import post, HTTPResponse, request
 import requests as rq
 
-api_url = "https://api.telegram.org/bot" + setup.token + "/{method}"
+api_url = "https://api.telegram.org/bot" + config.token + "/{method}"
 
 
 def make_poller():
@@ -19,8 +19,11 @@ def make_poller():
 poll = make_poller()
 
 
-@post('/{}'.format(setup.webhook_path))
+@post('/{}'.format(config.webhook_path))
 def updates():
+    if config.debug:
+        print("[INFO] Received an update:")
+        print(request.json)
     for func in poll.all:
         func(request.json)
     return HTTPResponse(status=200)
@@ -47,7 +50,7 @@ def start():
 
 
 def get_webhook_url():
-    return setup.base_url + setup.webhook_path
+    return config.base_url + config.webhook_path
 
 
 def set_webhook():
@@ -72,6 +75,12 @@ def delete_webhook():
 
 def do(method, payload=None):
     request_ = rq.post(api_url.format(method=method), json=payload)
+    if config.debug and request_:
+        print("[INFO] Received a response:")
+        print(request_.json())
+    elif config.debug:
+        print("[WARNING] Request failed")
+        print("[WARNING] Status code: {}".format(request_.status_code))
     return request_.json() if request_ else False
 
 
