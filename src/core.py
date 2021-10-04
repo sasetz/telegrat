@@ -22,7 +22,7 @@ def start():
     else:
         print("[ERROR] Webhook check failed. Creating the webhook anyways")
         set_webhook()
-
+    
 
 def get_webhook_url():
     return config.base_url + config.webhook_path
