@@ -1,7 +1,6 @@
 import setup
 from bottle import post, HTTPResponse, request
 import requests as rq
-from commands import *
 
 api_url = "https://api.telegram.org/bot" + setup.token + "/{method}"
 
@@ -74,3 +73,9 @@ def delete_webhook():
 def do(method, payload=None):
     request_ = rq.post(api_url.format(method=method), json=payload)
     return request_.json() if request_ else False
+
+
+@poll
+def greeting(message):
+    do("sendMessage", {"chat_id": message['message']['sender_chat']['id'], "text": "test"})
+    print("[INFO] Polling system works fine")
