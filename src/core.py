@@ -35,7 +35,7 @@ def start():
         if not webhook_info_req.json()["result"]["url"]:
             print("[INFO] Creating webhook")
             set_webhook()
-        elif webhook_info_req.json()["result"]["url"] != setup.webhook_path:
+        elif webhook_info_req.json()["result"]["url"] != get_webhook_url():
             print("[INFO] Webhook URL mismatched, changing to up-to-date")
             delete_webhook()
             set_webhook()
@@ -46,9 +46,13 @@ def start():
         set_webhook()
 
 
+def get_webhook_url():
+    return setup.base_url + setup.webhook_path
+
+
 def set_webhook():
     print("[INFO] Starting to set up the webhook")
-    setup_request = rq.post(api_url.format(method="setWebhook"), json={"url": setup.webhook_path})
+    setup_request = rq.post(api_url.format(method="setWebhook"), json={"url": get_webhook_url()})
     if setup_request.status_code == 200:
         print("[INFO] Webhook setup completed!")
     else:
