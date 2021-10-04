@@ -1,20 +1,6 @@
 from bottle import post, HTTPResponse, request
-from commands import *
+from commands import update
 import config
-
-
-def make_poller():
-    poller_registry = {}
-
-    def pollers(func, method):
-        poller_registry[method] = func
-        return func
-
-    pollers.all = poller_registry
-    return pollers
-
-
-update = make_poller()
 
 
 @post('/{}'.format(config.webhook_path))

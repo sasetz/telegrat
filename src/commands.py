@@ -1,5 +1,18 @@
-from subscription import update
 from core import do
+
+
+def make_poller():
+    poller_registry = {}
+
+    def pollers(func, method):
+        poller_registry[method] = func
+        return func
+
+    pollers.all = poller_registry
+    return pollers
+
+
+update = make_poller()
 
 
 @update
