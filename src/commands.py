@@ -15,7 +15,7 @@ def make_poller():
 update = make_poller()
 
 
-@update
+@update("message")
 def greeting(message):
     do("sendMessage",
        {"chat_id": message['message']['chat']['id'], "text": "Вы сказали: " + message['message']['text']})
