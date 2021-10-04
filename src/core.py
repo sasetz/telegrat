@@ -3,8 +3,6 @@ import config
 import requests as rq
 
 
-
-
 def start():
     webhook_info_req = rq.get(config.api_url.format(method="getWebhookInfo"))
     print("[INFO] Starting")
@@ -48,5 +46,3 @@ def delete_webhook():
     else:
         print("[ERROR] Webhook deletion failed!")
         print(delete_request)
-
-

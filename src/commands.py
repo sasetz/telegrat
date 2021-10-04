@@ -8,5 +8,6 @@ def greeting(message):
     print("[INFO] Polling system works fine")
 
 
+##############################################################################
 def start():
     print("[INFO] Starting to listen")
