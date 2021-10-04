@@ -1,6 +1,7 @@
 import setup
 from bottle import post, HTTPResponse, request
 import requests as rq
+from commands import *
 
 api_url = "https://api.telegram.org/bot" + setup.token + "/{method}"
 
