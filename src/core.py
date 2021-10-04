@@ -1,11 +1,12 @@
+import commands
 import config
 import requests as rq
 
-api_url = "https://api.telegram.org/bot" + config.token + "/{method}"
+
 
 
 def start():
-    webhook_info_req = rq.get(api_url.format(method="getWebhookInfo"))
+    webhook_info_req = rq.get(config.api_url.format(method="getWebhookInfo"))
     print("[INFO] Starting")
     if webhook_info_req.status_code == 200:
         print("[INFO] Webhook check succeeded:")
@@ -22,7 +23,8 @@ def start():
     else:
         print("[ERROR] Webhook check failed. Creating the webhook anyways")
         set_webhook()
-    
+    commands.start()
+
 
 def get_webhook_url():
     return config.base_url + config.webhook_path
@@ -30,7 +32,7 @@ def get_webhook_url():
 
 def set_webhook():
     print("[INFO] Starting to set up the webhook")
-    setup_request = rq.post(api_url.format(method="setWebhook"), json={"url": get_webhook_url()})
+    setup_request = rq.post(config.api_url.format(method="setWebhook"), json={"url": get_webhook_url()})
     if setup_request.status_code == 200:
         print("[INFO] Webhook setup completed!")
     else:
@@ -40,7 +42,7 @@ def set_webhook():
 
 def delete_webhook():
     print("[INFO] Starting to delete webhook")
-    delete_request = rq.post(api_url.format(method="deleteWebhook"))
+    delete_request = rq.post(config.api_url.format(method="deleteWebhook"))
     if delete_request.status_code == 200:
         print("[INFO] Webhook deleted successfully")
     else:
@@ -48,12 +50,3 @@ def delete_webhook():
         print(delete_request)
 
 
-def do(method, payload=None):
-    request_ = rq.post(api_url.format(method=method), json=payload)
-    if config.debug and request_:
-        print("[INFO] Received a response:")
-        print(request_.json())
-    elif config.debug:
-        print("[WARNING] Request failed")
-        print("[WARNING] Status code: {}".format(request_.status_code))
-    return request_.json() if request_ else False

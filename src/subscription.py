@@ -1,7 +1,19 @@
 from bottle import post, HTTPResponse, request
+import requests as rq
 import config
 
 subscribe_poll = []
+
+
+def do(method, payload=None):
+    request_ = rq.post(config.api_url.format(method=method), json=payload)
+    if config.debug and request_:
+        print("[INFO] Received a response:")
+        print(request_.json())
+    elif config.debug:
+        print("[WARNING] Request failed")
+        print("[WARNING] Status code: {}".format(request_.status_code))
+    return request_.json() if request_ else False
 
 
 @post('/{}'.format(config.webhook_path))

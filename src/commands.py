@@ -1,5 +1,4 @@
-from core import do
-from subscription import subscribe
+from subscription import subscribe, do, updates
 
 
 @subscribe
