@@ -1,8 +1,8 @@
-import subscription
+from subscription import update
 from core import do
 
 
-@subscription.update
+@update
 def greeting(message):
     do("sendMessage",
        {"chat_id": message['message']['chat']['id'], "text": "Вы сказали: " + message['message']['text']})

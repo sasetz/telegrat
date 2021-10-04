@@ -1,4 +1,5 @@
 from bottle import post, HTTPResponse, request
+from commands import *
 import config
 
 
